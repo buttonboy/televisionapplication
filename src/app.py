@@ -31,7 +31,7 @@ class Tokensniffer:
             browser = p.firefox.launch(headless=True)
             page = browser.new_page()
             page.on("request", self.onRequest)
-            page.goto(urllib.parse.urljoin(config["tv_url"] , "/tv/" + self.page + "/"))
+            page.goto(urllib.parse.urljoin(config["tv_url"] , "/mlb/" + self.page + "/"))
             browser.close()
     def onRequest(self, request):
         streamregex = "/([^\_]*).m3u8"
@@ -44,7 +44,7 @@ class Tokensniffer:
 
 def listChannels():
     res = {}
-    channelListRegex = "<a class=\"list-group-item\" href=\"/tv/(.*)/\">(.*)</a>"
+    channelListRegex = "<a class=\"list-group-item\" href=\"/events/(.*)/\">(.*)</a>"
     indexHTML = requests.get(config["tv_url"]).text
     for line in indexHTML.splitlines():
         search = re.search(channelListRegex, line)
